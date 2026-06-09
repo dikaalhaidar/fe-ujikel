@@ -56,26 +56,36 @@ function EditKelasPage() {
   };
 
   return (
-    <div className="card">
-      <h3>Edit Kelas</h3>
-      {message && <div className="message success-message">{message}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Nama Kelas</label>
-          <input 
-            type="text" 
-            value={nama} 
-            onChange={e => setNama(e.target.value)} 
-            required 
-          />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? 'Menyimpan...' : 'Simpan Perubahan'}
-        </button>
-        <button type="button" className="btn btn-secondary" onClick={() => navigate('/guru/kelas')}>
-          Batal
-        </button>
-      </form>
+    <div className="edit-page">
+      <div className="card edit-card">
+        <header className="card-header">
+          <h3>Edit Kelas</h3>
+          <p className="card-subtitle">Ubah nama kelas yang dipilih, lalu tekan simpan untuk menyimpan perubahan.</p>
+        </header>
+
+        {message && <div className="message success-message">{message}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Nama Kelas</label>
+            <input
+              type="text"
+              value={nama}
+              onChange={(e) => setNama(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Menyimpan...' : 'Simpan Perubahan'}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={() => navigate('/guru/kelas')}>
+              Batal
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -37,18 +37,18 @@ function TugasPage() {
     await fetch(`http://localhost:5000/api/guru/tugas/${editTugas.id}`, {
       method: 'PUT', headers: { 'Authorization': `Bearer ${token}` }, body: formData
     });
-    setMessage('Tugas diupdate');
+    setMessage('✅ Tugas berhasil diupdate');
     setEditTugas(null);
     fetchData();
     setTimeout(() => setMessage(''), 3000);
   };
 
   const hapusTugas = async (id) => {
-    if (!confirm('Yakin hapus?')) return;
+    if (!confirm('Yakin hapus tugas ini?')) return;
     await fetch(`http://localhost:5000/api/guru/tugas/${id}`, {
       method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
     });
-    setMessage('Tugas dihapus');
+    setMessage('🗑️ Tugas berhasil dihapus');
     fetchData();
     setTimeout(() => setMessage(''), 3000);
   };
@@ -57,16 +57,33 @@ function TugasPage() {
     <div>
       {message && <div className="message success-message">{message}</div>}
       <div className="card">
-        <h3>Daftar Tugas</h3>
-        {tugas.length === 0 && <p>Belum ada tugas.</p>}
+        <h3>📝 Daftar Tugas</h3>
+        {tugas.length === 0 && <p>Belum ada tugas. Buat tugas dulu!</p>}
         {tugas.map(t => (
           <div key={t.id} className="list-item">
             {editTugas?.id === t.id ? (
-              <div>
-                <input type="text" value={editTugas.judul} onChange={e => setEditTugas({ ...editTugas, judul: e.target.value })} placeholder="Judul" />
-                <textarea value={editTugas.deskripsi} onChange={e => setEditTugas({ ...editTugas, deskripsi: e.target.value })} placeholder="Deskripsi" rows="2" />
-                <input type="datetime-local" value={editTugas.deadline} onChange={e => setEditTugas({ ...editTugas, deadline: e.target.value })} />
-                <select value={editTugas.kelasId} onChange={e => setEditTugas({ ...editTugas, kelasId: e.target.value })}>
+              <div className="edit-form-inline">
+                <input 
+                  type="text" 
+                  value={editTugas.judul} 
+                  onChange={e => setEditTugas({ ...editTugas, judul: e.target.value })} 
+                  placeholder="Judul" 
+                />
+                <textarea 
+                  value={editTugas.deskripsi} 
+                  onChange={e => setEditTugas({ ...editTugas, deskripsi: e.target.value })} 
+                  placeholder="Deskripsi" 
+                  rows="2" 
+                />
+                <input 
+                  type="datetime-local" 
+                  value={editTugas.deadline} 
+                  onChange={e => setEditTugas({ ...editTugas, deadline: e.target.value })} 
+                />
+                <select 
+                  value={editTugas.kelasId} 
+                  onChange={e => setEditTugas({ ...editTugas, kelasId: e.target.value })}
+                >
                   <option value="">Pilih Kelas</option>
                   {kelas.map(k => <option key={k.id} value={k.id}>{k.nama}</option>)}
                 </select>
@@ -79,14 +96,14 @@ function TugasPage() {
               <div>
                 <h4>{t.judul}</h4>
                 <p>{t.deskripsi}</p>
-                <p>Kelas: {t.kelas?.nama}</p>
-                <p>Deadline: {new Date(t.deadline).toLocaleString()}</p>
+                <p>📚 Kelas: {t.kelas?.nama}</p>
+                <p>⏰ Deadline: {new Date(t.deadline).toLocaleString()}</p>
                 <div style={{ marginTop: '12px' }}>
                   <Link to={`/guru/tugas/${t.id}/edit`} className="btn btn-warning">
-                    Edit
+                    ✏️ Edit
                   </Link>
                   <Button variant="danger" onClick={() => hapusTugas(t.id)}>
-                    Hapus
+                    🗑️ Hapus
                   </Button>
                 </div>
               </div>

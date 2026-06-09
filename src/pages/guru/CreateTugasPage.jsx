@@ -32,16 +32,16 @@ function BuatTugasPage() {
       method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData
     });
     if (res.status === 201) {
-      setMessage('Tugas berhasil dibuat');
+      setMessage('✅ Tugas berhasil dibuat');
       setTimeout(() => navigate('/guru/tugas'), 2000);
     } else {
-      setMessage('Gagal buat tugas');
+      setMessage('❌ Gagal buat tugas');
     }
   };
 
   return (
-    <div className="card">
-      <h3>Buat Tugas Baru</h3>
+    <div className="card form-container">   {/* ← TAMBAHKAN form-container */}
+      <h3>📋 Buat Tugas Baru</h3>
       {message && <div className="message success-message">{message}</div>}
       <form onSubmit={buatTugas}>
         <div className="form-group">
